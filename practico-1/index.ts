@@ -1,6 +1,9 @@
-import { connectDB } from "./config/mongo";
-
-
+import { createItem, getItems } from "./config/inventarioMongo";
+import { createUser, getUsers } from "./config/usersMongo";
 
 console.log("hola")
-connectDB();
+
+//createUser();
+//createItem();
+//getUsers();
+//getItems();
