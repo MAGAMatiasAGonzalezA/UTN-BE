@@ -10,7 +10,7 @@ const URI_DB = process.env.URI_DB || ""
 const connectDB = async () => {
   try {
     await mongoose.connect(URI_DB);
-    console.log("Conección a mogoose con exito");
+    //console.log("Conección a mogoose con exito");
   } catch (error) {
     console.log("Error al conectarce a mongoose", error);
   }

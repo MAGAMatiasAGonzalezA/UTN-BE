@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import { connectDB } from "./mongo";
 
 connectDB();
-console.log("Esquema users")
+console.log("Conección a mogoose con exito, Esquema users")
 
 // defino la interface de los usuarios con los tipos de datos requeridos
 interface Userinterface extends Document {
@@ -30,9 +30,9 @@ const User = mongoose.model<Userinterface>("user", userSchema);
 const createUser = async () => {
   try {
     const user: Userinterface = new User({
-      name: "Matias Gonzalez",
-      email: "matiasalgo@gmail.com",
-      password: "123"
+      name: "Matias",
+      email: "matias@gmail.com",
+      password: "1234"
     })
 
     await user.save()
@@ -56,4 +56,35 @@ const getUsers = async () => {
   }
 }
 
-export { createUser, getUsers }
+// funcion para recuperar un usuario por su id
+const getUserById = async (id: string) => {
+  try {
+    const objectId = new mongoose.Types.ObjectId(id)
+    const user = await User.findById(id)
+
+    if (!user) {
+      console.log("No existe el usuario...")
+    } else {
+      console.log(user)
+    }
+  } catch (error) {
+    console.log("erro al recuperar el usuario", error)
+  }
+}
+
+// funcion para recuperar usuario por su nombre de usuario
+const getUserByName = async (name: string) => {
+  try {
+    const user = await User.findOne({ name: { $regex: name, $options: "i" } })
+
+    if (!user) {
+      console.log("El usuario no esta registrado")
+    } else {
+      console.log(user)
+    }
+  } catch (error) {
+    console.log("Error al recuperar el usuario...")
+  }
+}
+
+export { createUser, getUsers, getUserById, getUserByName }

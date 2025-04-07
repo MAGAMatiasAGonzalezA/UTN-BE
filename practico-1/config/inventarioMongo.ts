@@ -57,4 +57,35 @@ const getItems = async () => {
   }
 }
 
-export { createItem, getItems }
+// funcion para recuperar un item por su id
+const getItemById = async (id: string) => {
+  try {
+    const objectId = new mongoose.Types.ObjectId(id)
+    const item = await Item.findById(id)
+
+    if (!item) {
+      console.log("No existe el item...")
+    } else {
+      console.log(item)
+    }
+  } catch (error) {
+    console.log("erro al recuperar el item", error)
+  }
+}
+
+// funcion para recuperar item por su nombre
+const getItemByName = async (name: string) => {
+  try {
+    const item = await Item.findOne({ name: { $regex: name, $options: "i" } })
+
+    if (!item) {
+      console.log("El usuario no esta registrado")
+    } else {
+      console.log(item)
+    }
+  } catch (error) {
+    console.log("Error al recuperar el usuario...")
+  }
+}
+
+export { createItem, getItems, getItemById, getItemByName }

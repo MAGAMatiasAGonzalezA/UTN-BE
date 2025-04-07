@@ -1,9 +1,16 @@
-import { createItem, getItems } from "./config/inventarioMongo";
-import { createUser, getUsers } from "./config/usersMongo";
+import { createItem, getItems, getItemById, getItemByName } from "./config/inventarioMongo";
+import { createUser, getUsers, getUserById, getUserByName } from "./config/usersMongo";
 
 console.log("hola")
 
+
+
 //createUser();
-//createItem();
 //getUsers();
+//getUserById()
+//getUserByName()
+
+//createItem();
 //getItems();
+//getItemById();
+//getItemByName();
