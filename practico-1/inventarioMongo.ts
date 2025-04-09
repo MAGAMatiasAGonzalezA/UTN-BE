@@ -1,11 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { connectDB } from "./mongo";
+import { connectDB } from "./config/mongo";
 
 connectDB();
 console.log("Esquema inventarios")
 
-// defino la interface de mi inventario con los tipos de datos requeridos
-interface Inventariointerface extends Document {
+// defino la interface que extiende de document
+interface InventarioInterface extends Document {
   usuario: string;
   item: string;
   categoria?: "carnes" | "producHorticolas" | "lacteos" | "otros"
@@ -13,7 +13,7 @@ interface Inventariointerface extends Document {
 }
 
 // creo el esquema de mi inventario
-const inventarioSchema: Schema = new Schema<Inventariointerface>({
+const inventarioSchema: Schema = new Schema<InventarioInterface>({
   usuario: { type: String, required: true },
   item: { type: String, required: true, unique: true },
   categoria: { type: String, enum: ["carnes", "producHorticolas", "lacteos", "otros"], default: "otros" },
@@ -25,16 +25,14 @@ const inventarioSchema: Schema = new Schema<Inventariointerface>({
 inventarioSchema.set("strict", true);
 
 // guardo el modelo en una variable para reutilizar (1° parametro -> nombre del esquema, 2° parametro -> el objeto a ingresar)
-const Item = mongoose.model<Inventariointerface>("inventario", inventarioSchema);
+const Item = mongoose.model<InventarioInterface>("inventario", inventarioSchema);
+
+// CRUD -> created, read, update, delete
 
 // creo funcion para agregar 1 articulo, utilizando el modelo Item
-const createItem = async () => {
+const createItem = async (newItem: object) => {
   try {
-    const item: Inventariointerface = new Item({
-      usuario: "Matias Gonzalez",
-      item: "papa",
-      cantidad: 50
-    });
+    const item: InventarioInterface = new Item(newItem);
 
     await item.save();
     console.log(`item guardado: ${item}`)
@@ -88,4 +86,30 @@ const getItemByName = async (name: string) => {
   }
 }
 
-export { createItem, getItems, getItemById, getItemByName }
+const updateItem = async (id: string, body: object) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(id, body, { new: true })
+    if (!updatedItem) {
+      console.log("No se encontro el item")
+    } else {
+      console.log(updatedItem)
+    }
+  } catch (error) {
+    console.log("error al actualizar", error)
+  }
+}
+
+const deleteItem = async (id: string) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(id)
+    if (!deletedItem) {
+      console.log("Item no encontrado")
+    } else {
+      console.log(deletedItem)
+    }
+  } catch (error) {
+    console.log("Error al borrar el item", error)
+  }
+}
+
+export { createItem, getItems, getItemById, getItemByName, updateItem, deleteItem }

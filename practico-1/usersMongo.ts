@@ -1,11 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { connectDB } from "./mongo";
+import { connectDB } from "./config/mongo";
 
 connectDB();
 console.log("Conección a mogoose con exito, Esquema users")
 
-// defino la interface de los usuarios con los tipos de datos requeridos
-interface Userinterface extends Document {
+// defino la interface que extiende de document
+interface UserInterface extends Document {
   name: string
   email: string
   password?: string
@@ -13,7 +13,7 @@ interface Userinterface extends Document {
 }
 
 // creo el esquema de los usuarios
-const userSchema: Schema = new Schema<Userinterface>({
+const userSchema: Schema = new Schema<UserInterface>({
   name: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true, match: /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/ },
   password: { type: String },
@@ -24,16 +24,14 @@ const userSchema: Schema = new Schema<Userinterface>({
 userSchema.set("strict", true);
 
 // guardo el modelo en una variable para reutilizar (1° parametro -> nombre del esquema, 2° parametro -> el objeto a ingresar)
-const User = mongoose.model<Userinterface>("user", userSchema);
+const User = mongoose.model<UserInterface>("user", userSchema);
+
+//CRUD -> create, read, update, delete
 
 // creo funcion para agregar 1 usuario, utilizando el modelo User
-const createUser = async () => {
+const createUser = async (newUser: object) => {
   try {
-    const user: Userinterface = new User({
-      name: "Matias",
-      email: "matias@gmail.com",
-      password: "1234"
-    })
+    const user = new User(newUser)
 
     await user.save()
     console.log(`Usuario creado: ${user}`)
@@ -87,4 +85,30 @@ const getUserByName = async (name: string) => {
   }
 }
 
-export { createUser, getUsers, getUserById, getUserByName }
+const updateUser = async (id: string, body: object) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, body, { new: true })
+    if (!updatedUser) {
+      console.log("No se encuentra el usuario")
+    } else {
+      console.log(updatedUser)
+    }
+  } catch (error) {
+    console.log("Error al actualizar", error)
+  }
+}
+
+const deleteUser = async (id: string) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(id)
+    if (!deletedUser) {
+      console.log("Usuario no encontrado")
+    } else {
+      console.log(deletedUser)
+    }
+  } catch (error) {
+    console.log("error al borrar", error)
+  }
+}
+
+export { createUser, getUsers, getUserById, getUserByName, updateUser, deleteUser }

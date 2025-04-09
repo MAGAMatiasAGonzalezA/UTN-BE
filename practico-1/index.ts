@@ -1,5 +1,5 @@
-import { createItem, getItems, getItemById, getItemByName } from "./config/inventarioMongo";
-import { createUser, getUsers, getUserById, getUserByName } from "./config/usersMongo";
+import { createItem, getItems, getItemById, getItemByName, updateItem, deleteItem } from "./inventarioMongo";
+import { createUser, getUsers, getUserById, getUserByName, updateUser, deleteUser } from "./usersMongo";
 
 console.log("hola")
 
@@ -14,3 +14,13 @@ console.log("hola")
 //getItems();
 //getItemById();
 //getItemByName();
+
+
+
+// const item = {
+//   cantidad: 100,
+//   categoria: "producHorticolas"
+// }
+
+// updateItem("67f43798bdf823ff07fe1fc0", item)
+// getItemById("67f43798bdf823ff07fe1fc0")
