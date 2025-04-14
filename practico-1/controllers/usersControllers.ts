@@ -1,30 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-import { connectDB } from "./config/mongo";
-
-connectDB();
-console.log("Conección a mogoose con exito, Esquema users")
-
-// defino la interface que extiende de document
-interface UserInterface extends Document {
-  name: string
-  email: string
-  password?: string
-  role?: "user" | "admin"
-}
-
-// creo el esquema de los usuarios
-const userSchema: Schema = new Schema<UserInterface>({
-  name: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true, match: /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/ },
-  password: { type: String },
-  role: { type: String, enum: ["user", "admin"], default: "user" }
-}, { timestamps: false, versionKey: false });
-
-//  fijo el esquema como estricto (no modificable)
-userSchema.set("strict", true);
-
-// guardo el modelo en una variable para reutilizar (1° parametro -> nombre del esquema, 2° parametro -> el objeto a ingresar)
-const User = mongoose.model<UserInterface>("user", userSchema);
+import mongoose from "mongoose"
+import { User } from "../models/users"
 
 //CRUD -> create, read, update, delete
 
@@ -63,7 +38,7 @@ const getUserById = async (id: string) => {
     if (!user) {
       console.log("No existe el usuario...")
     } else {
-      console.log(user)
+      console.log("Usuario encontrado => ", user)
     }
   } catch (error) {
     console.log("erro al recuperar el usuario", error)
@@ -78,7 +53,7 @@ const getUserByName = async (name: string) => {
     if (!user) {
       console.log("El usuario no esta registrado")
     } else {
-      console.log(user)
+      console.log("Usuario encontrado => ", user)
     }
   } catch (error) {
     console.log("Error al recuperar el usuario...")
@@ -91,7 +66,7 @@ const updateUser = async (id: string, body: object) => {
     if (!updatedUser) {
       console.log("No se encuentra el usuario")
     } else {
-      console.log(updatedUser)
+      console.log("Usuario actualizado => ", updatedUser)
     }
   } catch (error) {
     console.log("Error al actualizar", error)
@@ -104,7 +79,7 @@ const deleteUser = async (id: string) => {
     if (!deletedUser) {
       console.log("Usuario no encontrado")
     } else {
-      console.log(deletedUser)
+      console.log("usuario borrado => ", deletedUser)
     }
   } catch (error) {
     console.log("error al borrar", error)
