@@ -1,4 +1,4 @@
-# 📦 CRUD para Inventario de Cocina - API con Mongoose
+# 📦 CRUD para Inventario de Cocina - con Mongoose
 
 Este proyecto creado de forma local, gestiona un sistema de cocina utilizando MongoDB y Mongoose. Contiene 4 esquemas principales:
 
@@ -18,7 +18,11 @@ Este proyecto creado de forma local, gestiona un sistema de cocina utilizando Mo
 ## 🛠️ ¿Estructura del proyecto?
 
 /src
-  ├── config/         # Conexión MongoDB 
+  ├── config/         # Conexión MongoDB
+
   ├── models/         # Esquemas de Mongoose
+
   ├── controllers/    # Funciones CRUD  
+
   └── index.ts        # Pruebas del CRUD con switch
+  
