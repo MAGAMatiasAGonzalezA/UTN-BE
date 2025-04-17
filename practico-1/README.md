@@ -18,11 +18,11 @@ Este proyecto creado de forma local, gestiona un sistema de cocina utilizando Mo
 ## 🛠️ ¿Estructura del proyecto?
 
 /src
-  |
+
   ├── config/         # Conexión MongoDB
-  |
+
   ├── models/         # Esquemas de Mongoose
-  |
+
   ├── controllers/    # Funciones CRUD  
-  |
+
   └── index.ts        # Pruebas del CRUD con switch
