@@ -1,7 +1,9 @@
-import mongoose from "mongoose"
 import { Recipe } from "../models/recipes"
 
 //CRUD -> create, read, update, delete
+
+// metodo de retorno del CRUD
+// {sucess: false, data: object | array, message: "recetario actualizado" | "No se encontro"}
 
 // creo funcion para agregar 1 receta, utilizando el modelo Recipe
 const createRecipe = async (newRecipe: object) => {
@@ -9,11 +11,10 @@ const createRecipe = async (newRecipe: object) => {
     const recipe = new Recipe(newRecipe)
 
     await recipe.save()
-    console.log(`Receta creada: ${recipe}`)
-    //return `Usuario creado: ${recipe}`
+    return { sucess: true, data: recipe, message: "Receta creada" }
 
-  } catch (error) {
-    console.log("Algo salio mal al ingresar el recetario", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -21,42 +22,41 @@ const createRecipe = async (newRecipe: object) => {
 const getRecipes = async () => {
   try {
     const recipes = await Recipe.find()
-    console.log(`Recetas en esquema: ${recipes}`)
-    //return `Usuarios en esquema: ${recipes}`
+    return { sucess: true, data: recipes, message: "Recetas en DB" }
 
-  } catch (error) {
-    console.log("algo salio mal al ver lista de recetas", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar una receta por su id
 const getRecipeById = async (id: string) => {
   try {
-    const objectId = new mongoose.Types.ObjectId(id)
     const recipe = await Recipe.findById(id)
 
     if (!recipe) {
-      console.log("No existe la receta...")
+      return { sucess: false, message: "No existe la receta..." }
     } else {
-      console.log("Receta encontrada => ", recipe)
+      return { sucess: true, data: recipe, message: "Receta encontrada por id" }
     }
-  } catch (error) {
-    console.log("erro al recuperar la receta", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar receta por su nombre
-const getRecipeByName = async (name: string) => {
+const getRecipesByName = async (name: string) => {
   try {
-    const recipe = await Recipe.findOne({ recipeName: { $regex: name, $options: "i" } })
+    const recipes = await Recipe.find({ recipeName: { $regex: name, $options: "i" } })
 
-    if (!recipe) {
-      console.log("La receta no esta registrada")
-    } else {
-      console.log("Receta encontrada => ", recipe)
+    if (recipes.length === 0) {
+      return { sucess: false, data: [], message: `No se encontraron resultados para "${name}"` }
     }
-  } catch (error) {
-    console.log("Error al recuperar la receta...")
+
+    return { sucess: true, data: recipes, message: "Lista de recetas filtradas por nombre" }
+
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -65,12 +65,12 @@ const updateRecipe = async (id: string, body: object) => {
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(id, body, { new: true })
     if (!updatedRecipe) {
-      console.log("No se encuentra la receta")
+      return { sucess: false, message: "No se encuentra la receta" }
     } else {
-      console.log("Receta actualizada => ", updatedRecipe)
+      return { sucess: true, data: updatedRecipe, message: "Receta actualizada" }
     }
-  } catch (error) {
-    console.log("Error al actualizar la receta", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -79,13 +79,13 @@ const deleteRecipe = async (id: string) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(id)
     if (!deletedRecipe) {
-      console.log("Receta no encontrada")
+      return { sucess: false, message: "Receta no encontrada" }
     } else {
-      console.log("Receta borrada => ", deletedRecipe)
+      return { sucess: true, data: deletedRecipe, message: "Receta borrada" }
     }
-  } catch (error) {
-    console.log("error al borrar la receta", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
-export { createRecipe, getRecipes, getRecipeById, getRecipeByName, updateRecipe, deleteRecipe }
+export { createRecipe, getRecipes, getRecipeById, getRecipesByName, updateRecipe, deleteRecipe }

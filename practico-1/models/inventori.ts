@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from "mongoose";
 import { connectDB } from "../config/mongo";
 
 connectDB();
-console.log("Esquema inventarios")
+console.log("Conección a mogoose con exito, Esquema inventarios")
 
 // defino la interface que extiende de document
 interface InventarioInterface extends Document {

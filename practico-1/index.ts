@@ -1,6 +1,7 @@
-import { insertItem, getItems, getItemById, getItemByName, updateItem, deleteItem } from "./controllers/inventoriControllers";
-import { createUser, getUsers, getUserById, getUserByName, updateUser, deleteUser } from "./controllers/usersControllers";
-import { createRecipe, getRecipes, getRecipeById, getRecipeByName, updateRecipe, deleteRecipe } from "./controllers/recipesControllers"
+import { insertItem, getItems, getItemById, getItemsByName, updateItem, deleteItem } from "./controllers/inventoriControllers";
+import { createUser, getUsers, getUserById, getUsersByName, updateUser, deleteUser } from "./controllers/usersControllers";
+import { createRecipe, getRecipes, getRecipeById, getRecipesByName, updateRecipe, deleteRecipe } from "./controllers/recipesControllers"
+import { insertPlaza, getplaza, getPlazaById, getPlazaByName, updatePlaza, deletePlaza } from "./controllers/plazaControllers";
 
 console.log("hola")
 
@@ -8,19 +9,53 @@ console.log("hola")
 // CRUD DE SCHEMA USUARIOS 
 // *********** --- *********** 
 
-// const userObject = {
-//   name: "claudita Actualiza",
-//   email: "claudia@gmail.com",
-//   password: "estoyaccediendo",
-//   role: "user" | "admin"
-// }
+const userObject = {
+  // name: "Panzoti Sancho",
+  // email: "PanSancho@gmail.com",
+  // password: "pass",
+  // role: "user"
+}
+let nombre = "sancho"
+const idU = "6800fb0bc71c4e46e0884a04"
 
-//createUser(userObject);
-//getUsers();
-//getUserById("")
-//getUserByName("")
-//updateUser("", userObject)
-//deleteUser("")
+const accionUser = ["createUser", "getUsers", "getUserById", "getUsersByName", "updateUser", "deleteUser"]
+
+const usuarios = async () => {
+  let respuesta;
+
+  switch (accionUser[3]) {
+    case "createUser":
+      respuesta = await createUser(userObject);
+      break;
+
+    case "getUsers":
+      respuesta = await getUsers();
+      break;
+
+    case "getUserById":
+      respuesta = await getUserById(idU);
+      break;
+
+    case "getUsersByName":
+      respuesta = await getUsersByName(nombre)
+      break;
+
+    case "updateUser":
+      respuesta = await updateUser(idU, userObject);
+      break;
+
+    case "deleteUser":
+      respuesta = await deleteUser(idU);
+      break;
+
+    default:
+      respuesta = { error: "Acción no valida..." }
+      break;
+  }
+  console.log(respuesta)
+};
+
+//usuarios();
 
 
 
@@ -28,20 +63,53 @@ console.log("hola")
 // CRUD DE SCHEMA INVENTARIO 
 // *********** --- *********** 
 
-// const itemObject = {
-//   usuario: "pepe",
-//   item: "lechuga",
-//   categoria: "producHorticolas",
-//   cantidad: 138
-// }
+const itemObject = {
+  usuario: "Mafiu",
+  //item: "batata",
+  categoria: "otros",
+  cantidad: 60
+}
 
-//insertItem(itemObject);
-//getItems();
-//getItemById("");
-//getItemByName("");
-//updateItem("", itemObject)
-//deleteItem("")
+const idI = "67fd5862870fcf38e2a23cf8"
 
+const accionInventario = ["insertItem", "getItems", "getItemById", "getItemsByName", "updateItem", "deleteItem"]
+
+const inventario = async () => {
+  let respuesta;
+
+  switch (accionInventario[5]) {
+    case "insertItem":
+      respuesta = await insertItem(itemObject);
+      break;
+
+    case "getItems":
+      respuesta = await getItems();
+      break;
+
+    case "getItemById":
+      respuesta = await getItemById(idI);
+      break;
+
+    case "getItemsByName":
+      respuesta = await getItemsByName(nombre)
+      break;
+
+    case "updateItem":
+      respuesta = await updateItem(idI, itemObject);
+      break;
+
+    case "deleteItem":
+      respuesta = await deleteItem(idI);
+      break;
+
+    default:
+      respuesta = { error: "Acción no valida..." }
+      break;
+  }
+  console.log(respuesta)
+};
+
+//inventario();
 
 
 
@@ -49,17 +117,105 @@ console.log("hola")
 // CRUD DE SCHEMA RECIPES 
 // *********** --- *********** 
 
-// const recipeObjetc = {
-//   recipeName: "",
-//   usuario: "",
-//   cantIngred: 3,
-//   ingredient: [{ item: "", cantidad: 1 }, { item: "", cantidad: 1 }, { item: "", cantidad: 1 }],
-//   procedure: ""
-// }
+const recipeObjetc = {
+  recipeName: "pure zapallo",
+  usuario: "pepe",
+  cantIngred: 3,
+  ingredient: [{ item: "zapallo", cantidad: 1 }, { item: "azucar", cantidad: 1 }, { item: "agua", cantidad: 1 }],
+  porciones: 5,
+  procedure: "hace pure"
+}
 
-//createRecipe(recipeObjetc);
-//getRecipes();
-//getRecipeById("");
-//getRecipeByName("");
-//updateRecipe("", recipeObjetc)
-//deleteRecipe("")
+const idR = "680100b2521e19efec38988f"
+
+let accionRecetas = ["createRecipe", "getRecipes", "getRecipeById", "getRecipesByName", "updateRecipe", "deleteRecipe"]
+
+const recetas = async () => {
+  let respuesta;
+
+  switch (accionRecetas[0]) {
+    case "createRecipe":
+      respuesta = await createRecipe(recipeObjetc);
+      break;
+
+    case "getRecipes":
+      respuesta = await getRecipes();
+      break;
+
+    case "getRecipeById":
+      respuesta = await getRecipeById(idR);
+      break;
+
+    case "getRecipesByName":
+      respuesta = await getRecipesByName(nombre)
+      break;
+
+    case "updateRecipe":
+      respuesta = await updateRecipe(idR, recipeObjetc);
+      break;
+
+    case "deleteRecipe":
+      respuesta = await deleteRecipe(idR);
+      break;
+
+    default:
+      respuesta = { error: "Acción no valida..." }
+      break;
+  }
+  console.log(respuesta)
+};
+
+//recetas();
+
+
+// *********** --- *********** 
+// CRUD DE SCHEMA PLAZA
+// *********** --- *********** 
+
+const plazaObjetc = {
+  plazaName: "pure zapallo",
+  usuario: "pepe",
+  porciones: 3,
+  fecha: Date.now()
+}
+
+const idP = "6801025798186005806800f0"
+
+let accionPlaza = ["insertPlaza", "getplaza", "getPlazaById", "getPlazaByName", "updatePlaza", "deletePlaza"]
+
+const plaza = async () => {
+  let respuesta;
+
+  switch (accionPlaza[3]) {
+    case "insertPlaza":
+      respuesta = await insertPlaza(plazaObjetc);
+      break;
+
+    case "getplaza":
+      respuesta = await getplaza();
+      break;
+
+    case "getPlazaById":
+      respuesta = await getPlazaById(idP);
+      break;
+
+    case "getPlazaByName":
+      respuesta = await getPlazaByName(nombre)
+      break;
+
+    case "updatePlaza":
+      respuesta = await updatePlaza(idP, plazaObjetc);
+      break;
+
+    case "deletePlaza":
+      respuesta = await deletePlaza(idP);
+      break;
+
+    default:
+      respuesta = { error: "Acción no valida..." }
+      break;
+  }
+  console.log(respuesta)
+};
+
+//plaza();

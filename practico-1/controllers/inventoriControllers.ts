@@ -1,8 +1,10 @@
-import mongoose from "mongoose";
 import { Item } from "../models/inventori";
 
 
 // CRUD -> created, read, update, delete
+
+// metodo de retorno del CRUD
+// {sucess: false, data: object | array, message: "inventario actualizado" | "No se encontro"}
 
 // creo funcion para agregar 1 articulo, utilizando el modelo Item
 const insertItem = async (newItem: object) => {
@@ -10,55 +12,52 @@ const insertItem = async (newItem: object) => {
     const item = new Item(newItem);
 
     await item.save();
-    console.log(`item guardado: ${item}`)
-    //return `item guardado: ${item}`
+    return { sucess: true, data: item, message: "Item ingresado" }
 
-  } catch (error) {
-    console.log("Error al ingresar datos...", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // ver lista de inventario
 const getItems = async () => {
   try {
-    //return await Item.find();
     const items = await Item.find();
-    console.log(`items en esquema: ${items}`)
-    //return `items en esquema: ${items}`
+    return { sucess: true, data: items, message: "Items en DB inventario" }
 
-  } catch (error) {
-    console.log("Algo salio mal: ", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar un item por su id
 const getItemById = async (id: string) => {
   try {
-    const objectId = new mongoose.Types.ObjectId(id)
     const item = await Item.findById(id)
 
     if (!item) {
-      console.log("No existe el item...")
+      return { sucess: false, message: "No existe el item..." }
     } else {
-      console.log("Item encontrado => ", item)
+      return { sucess: true, data: item, message: "Item encontrado por id" }
     }
-  } catch (error) {
-    console.log("erro al recuperar el item", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar item por su nombre
-const getItemByName = async (name: string) => {
+const getItemsByName = async (name: string) => {
   try {
-    const item = await Item.findOne({ item: { $regex: name, $options: "i" } })
+    const item = await Item.find({ item: { $regex: name, $options: "i" } })
 
-    if (!item) {
-      console.log("El item no esta registrado")
-    } else {
-      console.log("Item encontrado => ", item)
+    if (item.length === 0) {
+      return { sucess: false, data: [], message: `No se encontraron resultados para "${name}"` }
     }
-  } catch (error) {
-    console.log("Error al recuperar el usuario...")
+
+    return { sucess: true, data: item, message: "Lista del inventario filtrados por nombre" }
+
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -67,12 +66,12 @@ const updateItem = async (id: string, body: object) => {
   try {
     const updatedItem = await Item.findByIdAndUpdate(id, body, { new: true })
     if (!updatedItem) {
-      console.log("No se encontro el item")
+      return { sucess: false, message: "Item no existente" }
     } else {
-      console.log("Item actualizado => ", updatedItem)
+      return { sucess: true, data: updatedItem, message: "Item actualizado" }
     }
-  } catch (error) {
-    console.log("error al actualizar", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -81,13 +80,13 @@ const deleteItem = async (id: string) => {
   try {
     const deletedItem = await Item.findByIdAndDelete(id)
     if (!deletedItem) {
-      console.log("Item no encontrado")
+      return { sucess: false, message: "Item no existente" }
     } else {
-      console.log("Item borrado => ", deletedItem)
+      return { sucess: true, data: deletedItem, message: "Item eliminado" }
     }
-  } catch (error) {
-    console.log("Error al borrar el item", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
-export { insertItem, getItems, getItemById, getItemByName, updateItem, deleteItem }
+export { insertItem, getItems, getItemById, getItemsByName, updateItem, deleteItem }

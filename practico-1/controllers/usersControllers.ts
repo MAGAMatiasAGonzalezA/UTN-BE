@@ -1,7 +1,9 @@
-import mongoose from "mongoose"
 import { User } from "../models/users"
 
 //CRUD -> create, read, update, delete
+
+// metodo de retorno del
+// {sucess: false, data: object | array, message: "Usuario actualizado" | "No se encontro"}
 
 // creo funcion para agregar 1 usuario, utilizando el modelo User
 const createUser = async (newUser: object) => {
@@ -9,11 +11,10 @@ const createUser = async (newUser: object) => {
     const user = new User(newUser)
 
     await user.save()
-    console.log(`Usuario creado: ${user}`)
-    //return `Usuario creado: ${user}`
+    return { sucess: true, data: user, message: "Usuario creado" }
 
-  } catch (error) {
-    console.log("Algo salio mal al ingresar el usuario", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -21,42 +22,42 @@ const createUser = async (newUser: object) => {
 const getUsers = async () => {
   try {
     const users = await User.find()
-    console.log(`Usuarios en esquema: ${users}`)
-    //return `Usuarios en esquema: ${users}`
 
-  } catch (error) {
-    console.log("algo salio mal al ver lista de usuarios", error)
+    return { sucess: true, data: users, message: "Usuarios registrados en DB" }
+
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar un usuario por su id
 const getUserById = async (id: string) => {
   try {
-    const objectId = new mongoose.Types.ObjectId(id)
     const user = await User.findById(id)
 
     if (!user) {
-      console.log("No existe el usuario...")
+      return { sucess: false, message: "Usuario no existente" }
     } else {
-      console.log("Usuario encontrado => ", user)
+      return { sucess: true, data: user, message: "Usuario filtrado por id" }
     }
-  } catch (error) {
-    console.log("erro al recuperar el usuario", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
 // funcion para recuperar usuario por su nombre de usuario
-const getUserByName = async (name: string) => {
+const getUsersByName = async (name: string) => {
   try {
-    const user = await User.findOne({ name: { $regex: name, $options: "i" } })
+    const users = await User.find({ name: { $regex: name, $options: "i" } })
 
-    if (!user) {
-      console.log("El usuario no esta registrado")
-    } else {
-      console.log("Usuario encontrado => ", user)
+    if (users.length === 0) {
+      return { sucess: false, data: [], message: `No se encontraron resultados para "${name}"` }
     }
-  } catch (error) {
-    console.log("Error al recuperar el usuario...")
+
+    return { sucess: true, data: users, message: "Lista de usuarios filtrados por nombre" }
+
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -64,12 +65,12 @@ const updateUser = async (id: string, body: object) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(id, body, { new: true })
     if (!updatedUser) {
-      console.log("No se encuentra el usuario")
+      return { sucess: false, message: "Usuario no existente" }
     } else {
-      console.log("Usuario actualizado => ", updatedUser)
+      return { sucess: true, data: updatedUser, message: "Usuario actualizado" }
     }
-  } catch (error) {
-    console.log("Error al actualizar", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
@@ -77,13 +78,13 @@ const deleteUser = async (id: string) => {
   try {
     const deletedUser = await User.findByIdAndDelete(id)
     if (!deletedUser) {
-      console.log("Usuario no encontrado")
+      return { sucess: false, message: "Usuario no existente" }
     } else {
-      console.log("usuario borrado => ", deletedUser)
+      return { sucess: true, data: deletedUser, message: "Usuario eliminado" }
     }
-  } catch (error) {
-    console.log("error al borrar", error)
+  } catch (error: any) {
+    return { sucess: false, message: error.message }
   }
 }
 
-export { createUser, getUsers, getUserById, getUserByName, updateUser, deleteUser }
+export { createUser, getUsers, getUserById, getUsersByName, updateUser, deleteUser }

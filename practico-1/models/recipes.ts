@@ -22,6 +22,7 @@ interface RecipesInterface extends Document {
   usuario: string,
   cantIngred: { type: Number },
   ingredient: Ingredient[],
+  porciones: { type: Number },
   procedure?: { type: String }
 }
 
@@ -31,7 +32,8 @@ const recipesSchema: Schema = new Schema<RecipesInterface>({
   usuario: { type: String, required: true },
   cantIngred: { type: Number, required: true },
   ingredient: { type: [ingredietSchema], required: true },
-  procedure: { type: String },
+  porciones: { type: Number, required: true },
+  procedure: { type: String, required: true },
 }, { timestamps: false, versionKey: false });
 
 //  fijo el esquema como estricto (no modificable)
