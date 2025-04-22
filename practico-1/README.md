@@ -13,7 +13,15 @@ Este proyecto creado de forma local, gestiona un sistema de cocina utilizando Mo
 - mongoose
 - typescript
 - ts-node
-2. **En el archivo index.ts, cambiá la acción en el switch para probar: accionUser[0]**
+2. **En el archivo index.ts, cambiá la acción en el switch para probar: accionUser[]**
+- 0 → Crear un usuario
+- 1 → Obtener todos los usuarios
+- 2 → Buscar usuario por ID
+- 3 → Buscar usuarios por nombre
+- 4 → Actualizar usuario
+- 5 → Eliminar usuario
+- Esto aplica también para el switch inventario, recipes y plaza
+- Carga los datos necesario en el objeto anterior a cada switch para relizar la tarea elegida
 
 ## 🛠️ ¿Estructura del proyecto?
 
