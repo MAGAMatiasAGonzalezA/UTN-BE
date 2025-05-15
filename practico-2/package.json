@@ -1,0 +1,22 @@
+{
+  "name": "practico-2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn ./src/index.ts",
+    "build": "tsc",
+    "start": " tsc && node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoos": "^0.0.1-security"
+  }
+}
