@@ -18,7 +18,7 @@ const getAllBooks = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
-const createBooks = async (req: Request, res: Response): Promise<any> => {
+const createBook = async (req: Request, res: Response): Promise<any> => {
     try {
         const body = req.body
 
@@ -40,4 +40,48 @@ const createBooks = async (req: Request, res: Response): Promise<any> => {
 
 }
 
-export { getAllBooks, createBooks }
+const deleteBook = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const id = req.params.id
+        const deletedBook = await Book.findByIdAndDelete(id)
+        if (!deletedBook) return res.status(404).json({
+            success: false,
+            message: "Libro no encontrado"
+        })
+        return res.json({
+            success: true,
+            data: deletedBook,
+            message: "Libro eliminado con éxito"
+        })
+    } catch (error) {
+        const err = error as Error
+        return res.json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+const updateBook = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const id = req.params.id
+        const body = req.body
+
+        const updatedBook = await Book.findByIdAndUpdate(id, body, { new: true })
+        if (!updatedBook) return res.status(404).json({ success: false, message: "Libro no encontrado" })
+
+        return res.json({
+            success: true,
+            data: updatedBook,
+            message: "Liro actualizado"
+        })
+    } catch (error) {
+        const err = error as Error
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+export { getAllBooks, createBook, deleteBook, updateBook }
