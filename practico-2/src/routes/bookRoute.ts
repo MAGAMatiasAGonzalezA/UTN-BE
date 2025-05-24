@@ -1,12 +1,14 @@
 import { Router } from "express"
-import { getAllBooks, createBook, deleteBook, updateBook } from "../controllers/bookControllers"
+import { createBook, getAllBooks, getBookById, deleteBook, updateBook } from "../controllers/bookControllers"
 
 const bookRoutes = Router()
 
 // recuperar lista de libros
+bookRoutes.post("/", createBook)
+
 bookRoutes.get("/", getAllBooks)
 
-bookRoutes.post("/", createBook)
+bookRoutes.get("/:id", getBookById)
 
 bookRoutes.delete("/:id", deleteBook)
 
