@@ -59,57 +59,57 @@ console.log("hola")
 
 
 
-// // *********** --- *********** 
-// // CRUD DE SCHEMA INVENTARIO 
-// // *********** --- *********** 
+// *********** --- *********** 
+// CRUD DE SCHEMA INVENTARIO 
+// *********** --- *********** 
 
-// const itemObject = {
-//   usuario: "Mafiu",
-//   //item: "batata",
-//   categoria: "otros",
-//   cantidad: 60
-// }
+const itemObject = {
+  usuario: "Mafiu",
+  item: "batata",
+  categoria: "otros",
+  cantidad: 60
+}
+let nombre = "Mafiu"
+const idI = ""
 
-// const idI = "67fd5862870fcf38e2a23cf8"
+const accionInventario = ["insertItem", "getItems", "getItemById", "getItemsByName", "updateItem", "deleteItem"]
 
-// const accionInventario = ["insertItem", "getItems", "getItemById", "getItemsByName", "updateItem", "deleteItem"]
+const inventario = async () => {
+  let respuesta;
 
-// const inventario = async () => {
-//   let respuesta;
+  switch (accionInventario[0]) {
+    case "insertItem":
+      respuesta = await insertItem(itemObject);
+      break;
 
-//   switch (accionInventario[5]) {
-//     case "insertItem":
-//       respuesta = await insertItem(itemObject);
-//       break;
+    case "getItems":
+      respuesta = await getItems();
+      break;
 
-//     case "getItems":
-//       respuesta = await getItems();
-//       break;
+    case "getItemById":
+      respuesta = await getItemById(idI);
+      break;
 
-//     case "getItemById":
-//       respuesta = await getItemById(idI);
-//       break;
+    case "getItemsByName":
+      respuesta = await getItemsByName(nombre)
+      break;
 
-//     case "getItemsByName":
-//       respuesta = await getItemsByName(nombre)
-//       break;
+    case "updateItem":
+      respuesta = await updateItem(idI, itemObject);
+      break;
 
-//     case "updateItem":
-//       respuesta = await updateItem(idI, itemObject);
-//       break;
+    case "deleteItem":
+      respuesta = await deleteItem(idI);
+      break;
 
-//     case "deleteItem":
-//       respuesta = await deleteItem(idI);
-//       break;
+    default:
+      respuesta = { error: "Acción no valida..." }
+      break;
+  }
+  console.log(respuesta)
+};
 
-//     default:
-//       respuesta = { error: "Acción no valida..." }
-//       break;
-//   }
-//   console.log(respuesta)
-// };
-
-// //inventario();
+inventario();
 
 
 
@@ -220,127 +220,129 @@ console.log("hola")
 
 //plaza();
 
-console.log("Iniciando test de funciones CRUD...");
+//-----------------------
 
-const nombre = "sancho";
+// console.log("Iniciando test de funciones CRUD...");
 
-// ------------------ SCHEMAS ------------------
+// const nombre = "sancho";
 
-const testCases = {
-  usuarios: {
-    object: {
-      name: "Panzoti Sancho",
-      email: "PanSancho@gmail.com",
-      password: "pass",
-      role: "user"
-    },
-    id: "6800fb0bc71c4e46e0884a04",
-    actions: {
-      create: createUser,
-      getAll: getUsers,
-      getById: getUserById,
-      getByName: getUsersByName,
-      update: updateUser,
-      delete: deleteUser
-    }
-  },
+// // ------------------ SCHEMAS ------------------
 
-  inventario: {
-    object: {
-      usuario: "Mafiu",
-      item: "batata",
-      categoria: "otros",
-      cantidad: 60
-    },
-    id: "67fd5862870fcf38e2a23cf8",
-    actions: {
-      create: insertItem,
-      getAll: getItems,
-      getById: getItemById,
-      getByName: getItemsByName,
-      update: updateItem,
-      delete: deleteItem
-    }
-  },
+// const testCases = {
+//   usuarios: {
+//     object: {
+//       name: "Panzoti Sancho",
+//       email: "PanSancho@gmail.com",
+//       password: "pass",
+//       role: "user"
+//     },
+//     id: "6800fb0bc71c4e46e0884a04",
+//     actions: {
+//       create: createUser,
+//       getAll: getUsers,
+//       getById: getUserById,
+//       getByName: getUsersByName,
+//       update: updateUser,
+//       delete: deleteUser
+//     }
+//   },
 
-  recetas: {
-    object: {
-      recipeName: "pure zapallo",
-      usuario: "pepe",
-      cantIngred: 3,
-      ingredient: [
-        { item: "zapallo", cantidad: 1 },
-        { item: "azucar", cantidad: 1 },
-        { item: "agua", cantidad: 1 }
-      ],
-      porciones: 5,
-      procedure: "hace pure"
-    },
-    id: "680100b2521e19efec38988f",
-    actions: {
-      create: createRecipe,
-      getAll: getRecipes,
-      getById: getRecipeById,
-      getByName: getRecipesByName,
-      update: updateRecipe,
-      delete: deleteRecipe
-    }
-  },
+//   inventario: {
+//     object: {
+//       usuario: "Mafiu",
+//       item: "batata",
+//       categoria: "otros",
+//       cantidad: 60
+//     },
+//     id: "67fd5862870fcf38e2a23cf8",
+//     actions: {
+//       create: insertItem,
+//       getAll: getItems,
+//       getById: getItemById,
+//       getByName: getItemsByName,
+//       update: updateItem,
+//       delete: deleteItem
+//     }
+//   },
 
-  plaza: {
-    object: {
-      plazaName: "pure zapallo",
-      usuario: "pepe",
-      porciones: 3,
-      fecha: Date.now()
-    },
-    id: "6801025798186005806800f0",
-    actions: {
-      create: insertPlaza,
-      getAll: getplaza,
-      getById: getPlazaById,
-      getByName: getPlazaByName,
-      update: updatePlaza,
-      delete: deletePlaza
-    }
-  }
-};
+//   recetas: {
+//     object: {
+//       recipeName: "pure zapallo",
+//       usuario: "pepe",
+//       cantIngred: 3,
+//       ingredient: [
+//         { item: "zapallo", cantidad: 1 },
+//         { item: "azucar", cantidad: 1 },
+//         { item: "agua", cantidad: 1 }
+//       ],
+//       porciones: 5,
+//       procedure: "hace pure"
+//     },
+//     id: "680100b2521e19efec38988f",
+//     actions: {
+//       create: createRecipe,
+//       getAll: getRecipes,
+//       getById: getRecipeById,
+//       getByName: getRecipesByName,
+//       update: updateRecipe,
+//       delete: deleteRecipe
+//     }
+//   },
 
-// ------------------ FUNCIONES GENERALES ------------------
+//   plaza: {
+//     object: {
+//       plazaName: "pure zapallo",
+//       usuario: "pepe",
+//       porciones: 3,
+//       fecha: Date.now()
+//     },
+//     id: "6801025798186005806800f0",
+//     actions: {
+//       create: insertPlaza,
+//       getAll: getplaza,
+//       getById: getPlazaById,
+//       getByName: getPlazaByName,
+//       update: updatePlaza,
+//       delete: deletePlaza
+//     }
+//   }
+// };
 
-const ejecutarAccion = async (entidad: any, accion: any) => {
-  const { object, id, actions } = testCases[entidad];
-  let respuesta;
+// // ------------------ FUNCIONES GENERALES ------------------
 
-  try {
-    switch (accion) {
-      case "create":
-        respuesta = await actions.create(object);
-        break;
-      case "getAll":
-        respuesta = await actions.getAll();
-        break;
-      case "getById":
-        respuesta = await actions.getById(id);
-        break;
-      case "getByName":
-        respuesta = await actions.getByName(nombre);
-        break;
-      case "update":
-        respuesta = await actions.update(id, object);
-        break;
-      case "delete":
-        respuesta = await actions.delete(id);
-        break;
-      default:
-        respuesta = { error: "Acción no válida" };
-    }
-  } catch (error: any) {
-    respuesta = { error: error.message };
-  }
+// const ejecutarAccion = async (entidad: any, accion: any) => {
+//   const { object, id, actions } = testCases[entidad];
+//   let respuesta;
 
-  console.log(`Resultado de ${entidad} - ${accion}:`, respuesta);
-};
+//   try {
+//     switch (accion) {
+//       case "create":
+//         respuesta = await actions.create(object);
+//         break;
+//       case "getAll":
+//         respuesta = await actions.getAll();
+//         break;
+//       case "getById":
+//         respuesta = await actions.getById(id);
+//         break;
+//       case "getByName":
+//         respuesta = await actions.getByName(nombre);
+//         break;
+//       case "update":
+//         respuesta = await actions.update(id, object);
+//         break;
+//       case "delete":
+//         respuesta = await actions.delete(id);
+//         break;
+//       default:
+//         respuesta = { error: "Acción no válida" };
+//     }
+//   } catch (error: any) {
+//     respuesta = { error: error.message };
+//   }
+
+//   console.log(`Resultado de ${entidad} - ${accion}:`, respuesta);
+// };
 
 // ------------------ EJECUTAR PRUEBAS ------------------
 // Descomentar para probar

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose"
 import { IBook } from "../interfaces/bookInterface"
 
-const bookSchema = new Schema<IBook>({
+const bookSchema: Schema = new Schema<IBook>({
     title: { type: String, required: true, unique: true },
     author: { type: String, required: true },
     publishedYear: Number,
@@ -10,6 +10,8 @@ const bookSchema = new Schema<IBook>({
 }, {
     versionKey: false
 })
+
+bookSchema.set("strict", true);
 
 const Book = model<IBook>("Book", bookSchema)
 

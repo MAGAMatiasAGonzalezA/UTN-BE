@@ -7,11 +7,13 @@ const createBook = async (req: Request, res: Response): Promise<any> => {
         const body = req.body
         const newBook = new Book(body)
         const savedBook = await newBook.save()
+        console.log(savedBook)
         const resToClient = createResToClient(true, 201, "Libro ingresado con exito", savedBook)
         return res.json(resToClient)
     } catch (error) {
         const err = error as Error
         const resToClient = createResToClient(false, 500, err.message)
+        console.log(resToClient)
         return res.json(resToClient)
     }
 }

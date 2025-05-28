@@ -10,7 +10,7 @@ const app = express()
 
 app.use(express.json())
 
-app.use("/", bookRoutes)
+app.use("/api/books", bookRoutes)
 
 app.listen(PORT, () => {
     console.log(`✔ Servidor en escucha en el uerto http://localhost:${PORT}`)
