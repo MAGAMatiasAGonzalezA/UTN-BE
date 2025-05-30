@@ -1,7 +1,11 @@
+// Import de la librería "express" los metodos a utilizar
 import { Request, Response } from "express";
+// Importo mi modelo de bookModels
 import { Book } from "../models/bookModels"
+// Importo respuesta al cliente estandarizada desde utils
 import { createResToClient } from "../utils/resToclient";
 
+// Creo variable, para realizar el ingreso de un libro
 const createBook = async (req: Request, res: Response): Promise<any> => {
     try {
         const body = req.body
@@ -16,6 +20,7 @@ const createBook = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+// Creo variable, para recuperar los libros de mi DB
 const getAllBooks = async (req: Request, res: Response): Promise<any> => {
     try {
         const books = await Book.find()
@@ -28,6 +33,7 @@ const getAllBooks = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+// Creo variable, para recuperar un libro de mi DB
 const getBookById = async (req: Request, res: Response): Promise<any> => {
     try {
         const id = req.params.id
@@ -46,6 +52,7 @@ const getBookById = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+// Creo variable, para eliminar un libro existente
 const deleteBook = async (req: Request, res: Response): Promise<any> => {
     try {
         const id = req.params.id
@@ -63,6 +70,7 @@ const deleteBook = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+// Creo variable, para modificar los datos de un libro(registro)
 const updateBook = async (req: Request, res: Response): Promise<any> => {
     try {
         const id = req.params.id
@@ -82,4 +90,5 @@ const updateBook = async (req: Request, res: Response): Promise<any> => {
     }
 }
 
+// Exporto las variables que continen mis funciones asincronicas CRUD
 export { createBook, getAllBooks, getBookById, deleteBook, updateBook }
