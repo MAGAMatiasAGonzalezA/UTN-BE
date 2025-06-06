@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Biblioteca</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="popup hidden">
+        <form id="book-form-edit">
+            <button class="close-button-edit">&times;</button>
+            <h2>Editar libro</h2>
+            <label>Título</label>
+            <input id="titleEdit" type="text" name="title" placeholder="Título" required />
+            <label>Autor</label>
+            <input id="authorEdit" type="text" name="author" placeholder="Autor" required />
+            <label>Año de publicación</label>
+            <input id="publishedYearEdit" type="number" name="publishedYear" placeholder="Año publicación" />
+            <label>Genero</label>
+            <input id="genreEdit" type="text" name="genre" placeholder="Genero" />
+            <label>Disponible o no</label>
+            <select id="avaibleEdit" name="avaible" placeholder="Disponible">
+                <option value="true">Disponible</option>
+                <option value="false">No disponible</option>
+            </select>
+            <button class="btn-submit-edit" type="submit">Actualizar</button>
+        </form>
+    </div>
+    <h1>Agregar Libro</h1>
+    <form id="book-form">
+        <input id="title" type="text" name="title" placeholder="Titulo" required />
+        <input id="author" type="text" name="author" placeholder="Autor" required />
+        <input id="publishedYear" type="number" name="publishedYear" placeholder="Año publicación" />
+        <input id="genre" type="text" name="genre" placeholder="Genero" />
+        <select id="avaible" name="avaible" placeholder="Disponible">
+            <option value="true">Disponible</option>
+            <option value="false">No disponible</option>
+        </select>
+        <!-- <input id="avaible" type="text" name="avaible" placeholder="Disponible" /> -->
+        <button type="submit">Agregar</button>
+    </form>
+
+    <h2>Listado de Libros</h2>
+    <ul id="books-list"></ul>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

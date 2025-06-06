@@ -1,6 +1,7 @@
 # 📚 API de Libros
 
 Una API RESTful construida con **TypeScript**, **Express** y **MongoDB** para gestionar una colección de libros. Permite crear, listar, actualizar y eliminar libros mediante rutas específicas.
+Incluye una pequeña interfaz HTML para probar su funcionamiento de forma visual.
 
 ---
 
@@ -10,6 +11,7 @@ Una API RESTful construida con **TypeScript**, **Express** y **MongoDB** para ge
 - Express
 - MongoDB (con Mongoose)
 - Patrón de diseño: MVC (Modelo - Vista - Controlador)
+- Frontend: HTML, CSS y JavaScript puro(vanilla)
 - Control de versiones: Git
 
 ## 🛠️ ¿Estructura del proyecto?
@@ -30,6 +32,14 @@ src/
 
   └── index.ts        # Ejecución del proyecto
 
+front/
+
+├── app.js/             # Lógica del frontend para consumir la API
+
+├── index.html/         # Interfaz de prueba
+
+├── styles.css/         # Estilos para la interfaz
+
 ## ⚙️ Instalación y ejecución local
 
 **1. Clonar el repositorio**
@@ -47,6 +57,7 @@ cd nombre-del-repositorio
 *  <u>Dependencias de producción </u>
  - express
  - mongoose
+ - cors
 
 **3. Configurar las variables de entorno**
 
@@ -60,6 +71,11 @@ cd nombre-del-repositorio
 
 - npm run dev
 - El servidor estará disponible en http://localhost:1234
+
+## 🌐 Prueba de funcionamiento
+Para probar la API visualmente, abrir el archivo front/index.html en tu navegador. Este archivo contiene una interfaz simple que permite enviar peticiones a la API utilizando JavaScript.
+
+Asegurarse de que el backend esté corriendo antes de interactuar con la interfaz.
 
 ## 📌 Rutas disponibles
 
