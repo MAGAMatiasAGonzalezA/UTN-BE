@@ -10,6 +10,8 @@ const Dashboard = () => {
   const [errors, setErrors] = useState([])
   const [message, setMessage] = useState("")
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   const navigate = useNavigate()
 
   const { token } = useAuth()
@@ -46,7 +48,7 @@ const Dashboard = () => {
     const newDataProduct = { name, price, category }
 
     try {
-      const response = await fetch("http://localhost:1234/api/products", {
+      const response = await fetch(`${API_URL}/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

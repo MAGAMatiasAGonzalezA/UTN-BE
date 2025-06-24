@@ -10,11 +10,13 @@ const Login = () => {
 
   const navigate = useNavigate()
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   const { login, token } = useAuth()
 
   const handleLogin = async (body) => {
     try {
-      const response = await fetch("http://localhost:1234/api/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)

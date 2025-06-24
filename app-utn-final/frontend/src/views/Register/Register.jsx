@@ -10,6 +10,8 @@ const Register = () => {
 
   const navigate = useNavigate()
 
+  const API_URL = import.meta.env.VITE_API_URL
+
   const handleEmail = (e) => {
     setEmail(e.target.value)
   }
@@ -55,7 +57,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:1234/api/auth/register", {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         body: JSON.stringify(newDataUser),
         headers: { "Content-Type": "application/json" }
