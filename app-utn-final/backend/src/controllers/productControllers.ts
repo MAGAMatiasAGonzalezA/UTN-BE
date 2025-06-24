@@ -16,6 +16,17 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
   }
 }
 
+const searchProducts = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const body = req.body
+    const products = await Product.find({ name: { $regex: body.search, $options: "i" } })
+    res.status(200).json({ seccess: true, message: "produtos", data: products })
+  } catch (error) {
+    const err = error as Error
+    res.status(500).json({ success: false, message: err.message })
+  }
+}
+
 const createProduct = async (req: Request, res: Response): Promise<any> => {
   try {
     const body = req.body
@@ -89,4 +100,4 @@ const updateProduct = async (req: Request, res: Response): Promise<any> => {
   }
 }
 
-export { getAllProducts, createProduct, deleteProduct, updateProduct }
+export { getAllProducts, createProduct, deleteProduct, updateProduct, searchProducts }
