@@ -1,46 +1,119 @@
-# 🧪 Trabajo Práctico Complementario: Implementación de Búsqueda por Nombre
+# 🛍️ App de Gestión de Productos
 
-## 🎯 Objetivo
+Aplicación full stack que permite gestionar productos utilizando MongoDB, Express, React y Node.js.  
+En esta actualización, se incorporó una nueva funcionalidad: **búsqueda de productos por nombre** desde el frontend, conectada al backend mediante una ruta POST.
 
-Simular una tarea cotidiana dentro de un entorno de trabajo corporativo, aplicando una mejora sobre una aplicación previamente entregada. Esta mejora consiste en agregar una funcionalidad de búsqueda por nombre en la base de datos de productos, accesible desde el frontend y resuelta en el backend.
+---
 
-## 📌 Alcance de la mejora
+## 🚀 Nueva funcionalidad
 
-Se parte de una app CRUD funcional con MongoDB, organizada por modelos, rutas y controladores, que ya permite gestionar productos, usuarios (opcional) y categorías. Esta consigna requiere:
+Se agregó un campo de búsqueda que permite al usuario encontrar productos por nombre.  
+La búsqueda se realiza de forma dinámica y parcial (coincidencias por fragmento), sin necesidad de presionar un botón.
 
-- Agregar un campo de búsqueda en el frontend, que permita buscar productos por nombre.
-- Incorporar en el backend una ruta que reciba el valor buscado y devuelva los productos que coincidan parcial o completamente.
-- Asegurar la correcta visualización dinámica de los resultados en el frontend.
-- Mantener y aplicar buenas prácticas como el uso de controladores, rutas limpias, manejo de errores y status de respuesta.
-- Usar variables de entorno en ambos entornos para separar datos sensibles y facilitar la configuración.
+- 🔎 Búsqueda insensible a mayúsculas/minúsculas (`$regex` con opción `"i"`).
+- 🔁 El componente reacciona automáticamente al escribir.
+- 🧠 Lógica conectada al backend usando una ruta POST (`/products/search`).
 
-## ✅ Requisitos
+---
 
-- Utilizar la app CRUD ya desarrollada como base de trabajo.
-- Implementar un input de búsqueda de productos por nombre en el frontend.
-- Configurar una nueva ruta en el backend que reciba el término de búsqueda y realice una consulta en la base de datos.
-- La búsqueda debe ser parcial e insensible a mayúsculas/minúsculas.
-- Mostrar los resultados en pantalla en función del valor buscado.
-- Usar variables de entorno (`.env`) para definir la URL del backend en el frontend.
-- Mantener separadas las capas de modelo, controlador y rutas en el backend.
-- El backend debe estar conectado a una base de datos MongoDB usando Mongoose.
-- Conservar todo lo que ya funciona en la app sin modificar otras funcionalidades.
+## 🧱 Tecnologías utilizadas
 
-## 📄 Entrega
+- **Frontend:** React, Vite
+- **Backend:** Node.js, Express, TypeScript
+- **Base de datos:** MongoDB + Mongoose
+- **Control de versiones:** Git
 
-Subir el proyecto actualizado a un repositorio en GitHub.
+---
 
-Incluir un archivo `README.md` que contenga:
+## ⚙️ Instrucciones para ejecutar el proyecto
 
-- Título del proyecto y breve descripción de la nueva funcionalidad agregada.
-- Tecnologías utilizadas.
-- Instrucciones para ejecutar backend y frontend.
-- Ejemplos de uso de la nueva funcionalidad.
-- Variables de entorno necesarias (`.env.example`).
+### Backend
 
-Asegurarse de que tanto el backend como el frontend funcionen correctamente de forma conjunta.
+1. Clonar el repositorio.
+2. Ir a la carpeta del backend:  
+   ```bash
+   cd backend
+   ```
+3. Instalar dependencias:  
+   ```bash
+   npm install
+   ```
+4. Crear un archivo `.env` basado en `.env.example` (ver abajo).
+5. Ejecutar el servidor en desarrollo:  
+   ```bash
+   npm run dev
+   ```
 
-## ⏰ Fechas
+### Frontend
 
-- **Apertura:** Tuesday, 17 de June de 2025, 00:00  
-- **Cierre:** Tuesday, 1 de July de 2025, 23:59
+1. Ir a la carpeta del frontend:  
+   ```bash
+   cd frontend
+   ```
+2. Instalar dependencias:  
+   ```bash
+   npm install
+   ```
+3. Crear un archivo `.env` basado en `.env.example` (ver abajo).
+4. Ejecutar el frontend:  
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🌐 Variables de entorno
+
+Crear un archivo `.env` en cada carpeta (backend y frontend) según corresponda.
+
+### 📁 backend/.env.example
+```env
+PORT=1234
+MONGO_URI=mongodb://localhost:27017/nombreDeTuDB
+JWT_SECRET=tuContraseñaPerfecta
+```
+
+### 📁 frontend/.env.example
+```env
+VITE_API_URL=http://localhost:1234/api
+```
+
+---
+
+## 💡 Ejemplo de uso
+
+- Al escribir "ma/r" en el campo de búsqueda, se obtienen productos como:  
+  - "Martillo"
+  - "Maceta de plastico"
+  - "Martillo de goma"
+
+- Si no se encuentra ninguna coincidencia, se muestra el mensaje:  
+  `"No hay productos con esos datos"`
+
+---
+
+## 📁 Estructura de carpetas relevante
+
+```
+/backend
+  └── routes/
+       └── product.routes.ts
+  └── controllers/
+       └── product.controller.ts
+
+/frontend
+  └── pages/
+       └── Home.jsx
+```
+
+---
+
+## ✅ Estado del proyecto
+
+✔ CRUD funcional  
+✔ Búsqueda de productos implementada  
+
+---
+
+Desarrollado por Gabriel Alberini 💻
+Modificado por Matías A. González Ardubino 💻

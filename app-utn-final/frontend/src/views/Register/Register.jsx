@@ -75,10 +75,15 @@ const Register = () => {
         navigate("/login")
       }, 1500)
     } catch (err) {
-      if (err.message.startsWith("E11000 ")) {
-        setError("El registro ha sido denegado porque ya existe un usuario con ese correo electrónico. Por favor, utilice otro correo electrónico o recupere su contraseña.")
+      if (err.message.startsWith("El registro")) {
+        setError(err.message)
+        setTimeout(() => {
+          navigate("/register")
+          setError("")
+        }, 1500)
+      } else {
+        setError(err.message)
       }
-      setError(error)
     }
   }
 

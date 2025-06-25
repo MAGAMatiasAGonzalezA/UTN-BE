@@ -27,6 +27,7 @@ const register = async (req: Request, res: Response): Promise<any> => {
   try {
     const body = req.body
     // incluir validaciones
+
     const validate = validateUser(req.body)
 
     if (!validate.success) {
@@ -48,6 +49,9 @@ const register = async (req: Request, res: Response): Promise<any> => {
     })
   } catch (error) {
     const err = error as Error
+    if (err.message.startsWith("E11000")) {
+      err.message = "El registro ha sido denegado porque ya existe un usuario con ese correo electrónico. Por favor, utilice otro correo electrónico o recupere su contraseña."
+    }
     res.status(500).json({
       success: false,
       message: err.message
